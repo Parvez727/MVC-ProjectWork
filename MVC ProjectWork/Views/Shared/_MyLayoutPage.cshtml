@@ -1,0 +1,75 @@
+﻿<!DOCTYPE html>
+<html>
+<head runat="server">
+    <title>@ViewBag.Title - Common Writting</title>
+    @Styles.Render("~/Content/css") @*comes from BundlesConfig.cs*@
+</head>
+<body>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-2">
+     
+                <img src="~/Images/images.jpg" class="img-responsive thumbnail" />
+            </div>
+            <div class="col-sm-7 text-center">
+                <h1>IDB-BISEW</h1>
+            </div>
+            <div class="col-sm-3">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12 text-center">
+                <ul class="nav navbar-nav">
+                    <li class="active">@Html.ActionLink("Page1", "Page1", "Page")</li>
+                    <li>@Html.ActionLink("Page1", "Page1", "Page")</li>
+                    <li>@Html.ActionLink("Page2", "Page2", "Page")</li>
+                    <li>@Html.ActionLink("Page3", "Page3", "Page")</li>
+                    <li>@Html.ActionLink("Page4", "Page4", "Page")</li>
+                    <li>@Html.ActionLink("Page5", "Index", "foodMenuTBs")</li>
+                    <li>@Html.ActionLink("Home", "Index", "HomeAuth")</li>
+                    <li>@Html.ActionLink("About", "About", "HomeAuth")</li>
+                    <li>@Html.ActionLink("Contact", "Contact", "HomeAuth")</li>
+
+                    @{
+                        if (Session["username"] != null)
+                        {
+                            <li>@Html.ActionLink("Logout", "Logout", "LoginAuth")</li>
+                        }
+                        else
+                        {
+                            <li>@Html.ActionLink("Login", "Index", "LoginAuth")</li>
+
+                        }
+                    }
+                </ul>
+                <ul class="nav navbar navbar-right">
+                    @{ 
+                        if (Session["username"] != null)
+                        {
+                            <li><a href="#">Hello! @Session["username"].ToString()</a></li>
+                        }
+                    }
+                </ul>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-2">
+                Left Menu
+            </div>
+            <div class="col-sm-10">
+                <div>
+                    @RenderBody()
+                    @*ContentPlaceHolder*@
+                </div>
+            </div>
+            @*<div class="col-sm-2">
+                Advertisements
+            </div>*@
+        </div>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery") @*comes from BundlesConfig.cs*@
+</body>
+</html>
+

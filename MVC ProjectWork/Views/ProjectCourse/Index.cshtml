@@ -1,0 +1,106 @@
+﻿@model MVC_ProjectWork.Models.MyCourse
+
+@{
+    ViewBag.Title = "Index";
+    //Layout = "~/Views/Shared/_MyLayoutPage.cshtml";
+    Layout = null;
+}
+
+<h2>Index</h2>
+<h3 style="color:orange;font-weight:bolder">@ViewBag.msg</h3>
+
+@*<p>
+        @Html.ActionLink("Create New", "Create")
+    </p>*@
+<div class="col-sm-6">
+    <table class="table">
+        <tr>
+            <th>
+                Course Name
+            </th>
+            <th>
+                Student Id
+            </th>
+            <th>
+                Teacher Id
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in ViewBag.records)
+        {
+            <tr>
+                <td>
+                    @item.coursename
+                </td>
+                <td>
+                    @item.studentid
+                </td>
+                <td>
+                    @item.teacherid
+                </td>
+                <td>
+
+                    @Html.ActionLink("Edit", "index", new {id = item.courseid })
+
+                </td>
+
+            </tr>
+        }
+
+    </table>
+</div>
+
+<div class="col-sm-6">
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            <h4>Course</h4>
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(model => model.courseid, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.courseid, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.courseid, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.coursename, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.coursename, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.coursename, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.studentid, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.studentid, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.studentid, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.teacherid, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.teacherid, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.teacherid, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" name="create" value="Create" class="btn btn-default" />
+                    <input type="submit" name="edit" value="Edit" class="btn btn-default" />
+                    <input type="submit" name="delete" value="Delete" class="btn btn-default" />
+                </div>
+            </div>
+            <div style="font-size:x-large">@ViewBag.msg</div>
+        </div>
+    }
+
+</div>

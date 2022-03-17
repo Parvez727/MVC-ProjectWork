@@ -1,0 +1,78 @@
+﻿@model IEnumerable<MVC_ProjectWork.Models.Mystudent>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_MyLayoutPage.cshtml";
+    Layout = null;
+}
+
+<h2>Index</h2>
+@Html.Raw(TempData["CreateMessage"])
+@Html.Raw(TempData["UpdatedMessage"])
+
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
+    <p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.studentname)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.@class)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.gender)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.date)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.image_path)
+            </th>
+            <th></th>
+        </tr>
+    
+    @foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.studentname)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.@class)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.gender)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.date)
+        </td>
+        <td>
+            <img height="80" width="80" src="/images/@item.image_path" alt="No Picture" />
+            <br />
+            @Html.ActionLink("Change Picture", "ChangePicture", new { id = item.studentid })
+        </td>
+
+        @*<td>
+            <img  src="@Url.Content(item.image_path)" height="80" width="80"/>
+        </td>*@
+    <td>
+        @Html.ActionLink("Edit", "Edit", new { id = item.studentid }) |
+        @Html.ActionLink("Details", "Details", new { id = item.studentid }) |
+        @*@Html.ActionLink("Delete", "Delete", new { id = item.studentid })*@
+        @Html.ActionLink("Delete", "Delete", new { controller = "ProjectStudent", action = "Delete", id = @item.studentid })
+</tr>
+    }
+    
+    </table>
+</body>
+</html>

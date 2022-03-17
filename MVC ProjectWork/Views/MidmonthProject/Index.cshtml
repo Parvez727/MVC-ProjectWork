@@ -1,0 +1,31 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_MyLayoutPage.cshtml";
+}
+
+<h1 style="text-align:center; background-color:coral">Partial View</h1>
+<br />
+<h3 style="text-align: center; background-color:aqua"> Student Table</h3>
+@{Html.RenderAction("index", "ProjectStudent");}
+<hr />
+<br />
+<h3 style="text-align: center; background-color:darkcyan">Course Table</h3>
+@{Html.RenderAction("index", "ProjectCourse");}
+<hr />
+<br />
+<hr />
+<h3 style="text-align: center;">Department Table</h3>
+@{Html.RenderAction("index", "Departments");}
+<hr />
+<br />
+<h3 style="text-align: center; background-color: aqua ">Teacher Table</h3>
+@{Html.RenderAction("index", "Teachers");}
+<hr />
+<br />
+<h3 style="text-align: center; background-color: aqua ">One to many relation Table(Product and sales table)</h3>
+@Html.Action("index", "Product_Sales");
+<hr />
+@*@Html.Action("index", "StudentClient");*@
+
+

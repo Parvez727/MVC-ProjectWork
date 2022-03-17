@@ -1,0 +1,35 @@
+﻿@model MVC_ProjectWork.Models.Mystudent2
+@{
+    ViewBag.Title = "ShowClassName";
+    Layout = "~/Views/Shared/_MyLayoutPage.cshtml";
+}
+
+<h2>ShowClassName</h2>
+@using (Html.BeginForm())
+{
+    <h2>Select Student</h2>
+
+    @Html.DropDownList("class", (IEnumerable<SelectListItem>)ViewBag.DDLProducts)
+    <input type="submit" value="Save" class="btn btn-default" />
+}
+<hr />
+Show: @ViewBag.StId
+<hr />
+@if (ViewBag.StId != null)
+{
+    <table class="table">
+        <tr><th>id</th><th>name</th><th>class</th><th>fee</th><th>Action</th></tr>
+        @foreach (var item in ViewBag.allstudents)
+        {
+            <tr>
+                <td>@item.id</td>
+                <td>@item.name</td>
+                <td>@(item.@class)</td>
+                <td>@item.fee</td>
+                <td>
+                    @Html.ActionLink("Edit", "EditStudents", new { controller = "Chapter4Vm", action = "EditStudents", id = @item.id })
+                </td>
+            </tr>
+        }
+    </table>
+}

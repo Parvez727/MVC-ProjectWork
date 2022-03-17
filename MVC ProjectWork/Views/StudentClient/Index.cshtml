@@ -1,0 +1,164 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    &times;
+                </button>
+                <h4 class="modal-title"> Operation in CRUD</h4>
+            </div>
+
+            <div class="modal-body">
+                <form method="post">
+                    <div class="container">
+                        <div>
+                            <label for="id">ID  :    </label>
+                            <input type="text" name="id" id="id" class="form-control"  />
+                        </div>
+                        <div>
+                            <label for="name">Name  :   </label>
+                            <input type="text" name="name" id="name" class="form-control"  />
+                        </div>
+                        <div>
+                            <label for="class">Class    :   </label>
+                            <input type="text" name="class" id="class" class="form-control"  />
+                        </div>
+                        <div>
+                            <label for="fee">Fee    :   </label>
+                            <input type="text" name="fee" id="fee" class="form-control"  />
+                        </div>
+                    </div>
+                    <br />
+                    <br />
+                    <div>
+                        <input type="button" id="add" class="btn btn-primary" value="Add" />
+                        <input type="button" id="delete" class="btn btn-primary" value="Delete" />
+                        <input type="button" id="update" class="btn btn-primary" value="Update" />
+                    </div>
+                    <div id="out"></div>
+                </form>
+
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+    
+</div>
+<table class="table">
+    <thead>
+        <tr><th>ID</th><th>Name</th><th>Class</th><th>Fee</th><th>Operation</th></tr>
+    </thead>
+    <tbody>
+    </tbody>
+</table>
+
+<button id="operation" type="button" class="btn btn-info btn-lg" 
+        data-toggle="modal" data-target="#myModal">
+        Open Operations
+</button>
+
+
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+<script type="text/javascript">
+    $(document).ready(function () {
+        downloadStudents();
+        function downloadStudents() {
+            $("table tbody").empty();
+            $.getJSON("/mystudent/Getstudents",
+                function (data) { _displayStudents(data); });
+        }
+        function _displayStudents(data) {
+            for (var i = 0; i < data.length; i++) {
+                var ids = data[i];
+                $("table tbody").append(`<tr 
+                    onclick="_displayStudent('${ids.id}','${ids.name}','${ids.class}',
+                    '${ids.fee}')"><td>${ids.id}</td><td>${ids.name}</td><td>${ids.class}
+                    </td><td>${ids.fee}</td>><td><button type="button" class="btn btn-info btn-lg"
+                        data-toggle="modal" data-target="#myModal">Edit</button></td></tr>`);
+            };
+        }
+        $("#add").click(function () {
+            $.ajax('/mystudent/poststudent',
+                {
+                    data: {
+                        id: $("#id").val(), name: $("#name").val(), class: $("#class").val(),
+                        fee: $("#fee").val()
+                    },
+                    dataType: 'json',
+                    method: 'post',
+                    timeout: 500,
+                    success: function (data, status, xhr) {
+                        $('#out').html("Successfuly added");
+                        downloadStudents();
+                    },
+                    error: function (jqXhr, textStatus, errorMessage) {
+                        $('#out').html('Error: ' + errorMessage);
+                    }
+                });
+        });
+        $("#update").click(function () {
+            $.ajax('/mystudent/putstudent/' + $("#id").val(),
+                {
+                    data: {
+                        id: $("#id").val(), name: $("#name").val(), class: $("#class").val(),
+                        fee: $("#fee").val()
+                    },
+                    dataType: 'json',
+                    method: 'post',
+                    timeout: 500,
+                    success: function (data, status, xhr) {
+                        $('#out').html("Successfuly updated");
+                        downloadStudents();
+                    },
+                    error: function (jqXhr, textStatus, errorMessage) {
+                        $('#out').html('Error: ' + errorMessage);
+                    }
+                });
+        });
+        $("#delete").click(function () {
+            $.ajax('/mystudent/deletestudent/' + $("#id").val(),
+                {
+                    dataType: 'json',
+                    method: 'post',
+                    timeout: 500,
+                    success: function (data, status, xhr) {
+                        $('#out').html("Successfuly delete");
+                        downloadStudents();
+                    },
+                    error: function (jqXhr, textStatus, errorMessage) {
+                        $('#out').html('Error: ' + errorMessage);
+                    }
+                });
+        });
+
+        $("#operation").click(function () {
+            $("#id").val("");
+            $("#name").val("");
+            $("#class").val("");
+            $("#fee").val("");
+        })
+
+    });
+    function _displayStudent(id, name, class1, fee) {
+        $("#id").val(id);
+        $("#name").val(name);
+        $("#class").val(class1);
+        $("#fee").val(fee);
+    }
+
+</script>
+
+

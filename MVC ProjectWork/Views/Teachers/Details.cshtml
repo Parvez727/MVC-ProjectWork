@@ -1,0 +1,35 @@
+﻿@model MVC_ProjectWork.Models.Teacher
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_MyLayoutPage.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Teacher</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.teachername)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.teachername)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Department.departmentname)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Department.departmentname)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.teacherid }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

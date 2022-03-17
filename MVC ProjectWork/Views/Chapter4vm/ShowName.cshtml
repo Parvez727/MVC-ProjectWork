@@ -1,0 +1,23 @@
+﻿
+@{
+    ViewBag.Title = "ShowName";
+    Layout = "~/Views/Shared/_MyLayoutPage.cshtml";
+}
+
+<h2>ShowName</h2>
+
+@using (Html.BeginForm())
+{
+    <h2>Select Student</h2>
+
+    @Html.DropDownList("id", (IEnumerable<SelectListItem>)ViewBag.DDLProducts)
+    <input type="submit" value="Save" class="btn btn-default" />
+}
+<hr />
+Show: @ViewBag.StId
+<hr />
+<h1>Edit Section</h1>
+@if (ViewBag.StId != null)
+{
+    @Html.Action("EditStudents", "Chapter4Vm", new { id = ViewBag.StId })
+}

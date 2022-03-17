@@ -1,0 +1,60 @@
+﻿@model IEnumerable<MVC_ProjectWork.Models.Mystudent2>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_MyLayoutPage.cshtml";
+}
+
+<h2>Index</h2>
+<p>
+    <div style="font-size:xx-large; color:orange">@ViewBag.msg</div>
+</p>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.@class)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.fee)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.@class)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.fee)
+            </td>
+            <td>
+                @using (Html.BeginForm("Delete1/" + item.id, "Chapter4vm", FormMethod.Post))
+                {
+                    @Html.ActionLink("Edit", "EditStudents", new { id = item.id })
+                    <input type="submit" value="Delete" class="btn btn-link" />
+                }
+
+                @*@Html.ActionLink("Delete", "Delete1", new { Controller = "Chapter4v", action = "Delete1", id = @item.id })*@
+            </td>
+        </tr>
+    }
+
+</table>
+@Html.ActionLink("Show Preculiar Name", "ShowName")
+<br />
+@Html.ActionLink("Show Class Master Details Page", "ShowClassName")
+<br />
+@Html.ActionLink("Insert Students", "AddStudents")
+

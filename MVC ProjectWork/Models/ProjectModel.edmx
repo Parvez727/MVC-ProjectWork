@@ -1,0 +1,388 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="MVC_ProjectModel2.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Course">
+          <Key>
+            <PropertyRef Name="courseid" />
+          </Key>
+          <Property Name="courseid" Type="int" Nullable="false" />
+          <Property Name="coursename" Type="varchar" MaxLength="100" />
+          <Property Name="studentid" Type="int" />
+          <Property Name="teacherid" Type="int" />
+        </EntityType>
+        <EntityType Name="Department">
+          <Key>
+            <PropertyRef Name="departmentid" />
+          </Key>
+          <Property Name="departmentid" Type="int" Nullable="false" />
+          <Property Name="departmentname" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="Employee">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="100" />
+          <Property Name="designation" Type="varchar" MaxLength="100" />
+          <Property Name="image_path" Type="varchar(max)" />
+        </EntityType>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="product_id" />
+          </Key>
+          <Property Name="product_id" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="product_name" Type="varchar" MaxLength="100" />
+          <Property Name="purchase_price" Type="int" />
+        </EntityType>
+        <EntityType Name="Sales">
+          <Key>
+            <PropertyRef Name="sale_id" />
+          </Key>
+          <Property Name="sale_id" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="product_id" Type="varchar" MaxLength="100" />
+          <Property Name="Qty" Type="int" />
+          <Property Name="sales_price" Type="int" />
+          <Property Name="Total_price" Type="money" />
+        </EntityType>
+        <EntityType Name="Students">
+          <Key>
+            <PropertyRef Name="studentid" />
+          </Key>
+          <Property Name="studentid" Type="int" Nullable="false" />
+          <Property Name="studentname" Type="varchar" MaxLength="100" />
+          <Property Name="class" Type="varchar" MaxLength="100" />
+          <Property Name="gender" Type="nvarchar" MaxLength="50" />
+          <Property Name="date" Type="date" />
+          <Property Name="image_path" Type="nvarchar" MaxLength="500" />
+        </EntityType>
+        <EntityType Name="Teachers">
+          <Key>
+            <PropertyRef Name="teacherid" />
+          </Key>
+          <Property Name="teacherid" Type="int" Nullable="false" />
+          <Property Name="teachername" Type="varchar" MaxLength="100" />
+          <Property Name="departmentid" Type="int" />
+        </EntityType>
+        <Association Name="FK__Course__studenti__3D5E1FD2">
+          <End Role="Students" Type="Self.Students" Multiplicity="0..1" />
+          <End Role="Course" Type="Self.Course" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Students">
+              <PropertyRef Name="studentid" />
+            </Principal>
+            <Dependent Role="Course">
+              <PropertyRef Name="studentid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Course__teacheri__3E52440B">
+          <End Role="Teachers" Type="Self.Teachers" Multiplicity="0..1" />
+          <End Role="Course" Type="Self.Course" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Teachers">
+              <PropertyRef Name="teacherid" />
+            </Principal>
+            <Dependent Role="Course">
+              <PropertyRef Name="teacherid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Sales__product_i__4BAC3F29">
+          <End Role="Product" Type="Self.Product" Multiplicity="0..1" />
+          <End Role="Sales" Type="Self.Sales" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="product_id" />
+            </Principal>
+            <Dependent Role="Sales">
+              <PropertyRef Name="product_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Teachers__depart__3A81B327">
+          <End Role="Department" Type="Self.Department" Multiplicity="0..1" />
+          <End Role="Teachers" Type="Self.Teachers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Department">
+              <PropertyRef Name="departmentid" />
+            </Principal>
+            <Dependent Role="Teachers">
+              <PropertyRef Name="departmentid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="MVC_ProjectModel2StoreContainer">
+          <EntitySet Name="Course" EntityType="Self.Course" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Department" EntityType="Self.Department" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Employee" EntityType="Self.Employee" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Product" EntityType="Self.Product" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Sales" EntityType="Self.Sales" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Students" EntityType="Self.Students" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Teachers" EntityType="Self.Teachers" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Course__studenti__3D5E1FD2" Association="Self.FK__Course__studenti__3D5E1FD2">
+            <End Role="Students" EntitySet="Students" />
+            <End Role="Course" EntitySet="Course" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Course__teacheri__3E52440B" Association="Self.FK__Course__teacheri__3E52440B">
+            <End Role="Teachers" EntitySet="Teachers" />
+            <End Role="Course" EntitySet="Course" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Sales__product_i__4BAC3F29" Association="Self.FK__Sales__product_i__4BAC3F29">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="Sales" EntitySet="Sales" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Teachers__depart__3A81B327" Association="Self.FK__Teachers__depart__3A81B327">
+            <End Role="Department" EntitySet="Department" />
+            <End Role="Teachers" EntitySet="Teachers" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="MVC_ProjectModel2" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Course">
+          <Key>
+            <PropertyRef Name="courseid" />
+          </Key>
+          <Property Name="courseid" Type="Int32" Nullable="false" />
+          <Property Name="coursename" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="studentid" Type="Int32" />
+          <Property Name="teacherid" Type="Int32" />
+          <NavigationProperty Name="Student" Relationship="Self.FK__Course__studenti__3D5E1FD2" FromRole="Course" ToRole="Students" />
+          <NavigationProperty Name="Teacher" Relationship="Self.FK__Course__teacheri__3E52440B" FromRole="Course" ToRole="Teachers" />
+        </EntityType>
+        <EntityType Name="Department">
+          <Key>
+            <PropertyRef Name="departmentid" />
+          </Key>
+          <Property Name="departmentid" Type="Int32" Nullable="false" />
+          <Property Name="departmentname" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Teachers" Relationship="Self.FK__Teachers__depart__3A81B327" FromRole="Department" ToRole="Teachers" />
+        </EntityType>
+        <EntityType Name="Student">
+          <Key>
+            <PropertyRef Name="studentid" />
+          </Key>
+          <Property Name="studentid" Type="Int32" Nullable="false" />
+          <Property Name="studentname" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="class" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="gender" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="date" Type="DateTime" Precision="0" />
+          <Property Name="image_path" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Courses" Relationship="Self.FK__Course__studenti__3D5E1FD2" FromRole="Students" ToRole="Course" />
+        </EntityType>
+        <EntityType Name="Teacher">
+          <Key>
+            <PropertyRef Name="teacherid" />
+          </Key>
+          <Property Name="teacherid" Type="Int32" Nullable="false" />
+          <Property Name="teachername" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="departmentid" Type="Int32" />
+          <NavigationProperty Name="Courses" Relationship="Self.FK__Course__teacheri__3E52440B" FromRole="Teachers" ToRole="Course" />
+          <NavigationProperty Name="Department" Relationship="Self.FK__Teachers__depart__3A81B327" FromRole="Teachers" ToRole="Department" />
+        </EntityType>
+        <Association Name="FK__Course__studenti__3D5E1FD2">
+          <End Role="Students" Type="Self.Student" Multiplicity="0..1" />
+          <End Role="Course" Type="Self.Course" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Students">
+              <PropertyRef Name="studentid" />
+            </Principal>
+            <Dependent Role="Course">
+              <PropertyRef Name="studentid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Course__teacheri__3E52440B">
+          <End Role="Teachers" Type="Self.Teacher" Multiplicity="0..1" />
+          <End Role="Course" Type="Self.Course" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Teachers">
+              <PropertyRef Name="teacherid" />
+            </Principal>
+            <Dependent Role="Course">
+              <PropertyRef Name="teacherid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Teachers__depart__3A81B327">
+          <End Role="Department" Type="Self.Department" Multiplicity="0..1" />
+          <End Role="Teachers" Type="Self.Teacher" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Department">
+              <PropertyRef Name="departmentid" />
+            </Principal>
+            <Dependent Role="Teachers">
+              <PropertyRef Name="departmentid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="MVC_ProjectEntities2" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Courses" EntityType="Self.Course" />
+          <EntitySet Name="Departments" EntityType="Self.Department" />
+          <EntitySet Name="Students" EntityType="Self.Student" />
+          <EntitySet Name="Teachers" EntityType="Self.Teacher" />
+          <AssociationSet Name="FK__Course__studenti__3D5E1FD2" Association="Self.FK__Course__studenti__3D5E1FD2">
+            <End Role="Students" EntitySet="Students" />
+            <End Role="Course" EntitySet="Courses" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Course__teacheri__3E52440B" Association="Self.FK__Course__teacheri__3E52440B">
+            <End Role="Teachers" EntitySet="Teachers" />
+            <End Role="Course" EntitySet="Courses" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Teachers__depart__3A81B327" Association="Self.FK__Teachers__depart__3A81B327">
+            <End Role="Department" EntitySet="Departments" />
+            <End Role="Teachers" EntitySet="Teachers" />
+          </AssociationSet>
+          <EntitySet Name="Products" EntityType="MVC_ProjectModel2.Product" />
+          <EntitySet Name="Sales" EntityType="MVC_ProjectModel2.Sale" />
+          <AssociationSet Name="FK__Sales__product_i__4BAC3F29" Association="MVC_ProjectModel2.FK__Sales__product_i__4BAC3F29">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="Sale" EntitySet="Sales" />
+          </AssociationSet>
+          <EntitySet Name="Employees" EntityType="MVC_ProjectModel2.Employee" />
+        </EntityContainer>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="product_id" />
+          </Key>
+          <Property Name="product_id" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="product_name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="purchase_price" Type="Int32" />
+          <NavigationProperty Name="Sales" Relationship="MVC_ProjectModel2.FK__Sales__product_i__4BAC3F29" FromRole="Product" ToRole="Sale" />
+        </EntityType>
+        <EntityType Name="Sale">
+          <Key>
+            <PropertyRef Name="sale_id" />
+          </Key>
+          <Property Name="sale_id" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="product_id" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Qty" Type="Int32" />
+          <Property Name="sales_price" Type="Int32" />
+          <Property Name="Total_price" Type="Decimal" Precision="19" Scale="4" />
+          <NavigationProperty Name="Product" Relationship="MVC_ProjectModel2.FK__Sales__product_i__4BAC3F29" FromRole="Sale" ToRole="Product" />
+        </EntityType>
+        <Association Name="FK__Sales__product_i__4BAC3F29">
+          <End Type="MVC_ProjectModel2.Product" Role="Product" Multiplicity="0..1" />
+          <End Type="MVC_ProjectModel2.Sale" Role="Sale" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="product_id" />
+            </Principal>
+            <Dependent Role="Sale">
+              <PropertyRef Name="product_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Employee">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="designation" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="image_path" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="MVC_ProjectModel2StoreContainer" CdmEntityContainer="MVC_ProjectEntities2">
+          <EntitySetMapping Name="Courses">
+            <EntityTypeMapping TypeName="MVC_ProjectModel2.Course">
+              <MappingFragment StoreEntitySet="Course">
+                <ScalarProperty Name="courseid" ColumnName="courseid" />
+                <ScalarProperty Name="coursename" ColumnName="coursename" />
+                <ScalarProperty Name="studentid" ColumnName="studentid" />
+                <ScalarProperty Name="teacherid" ColumnName="teacherid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Departments">
+            <EntityTypeMapping TypeName="MVC_ProjectModel2.Department">
+              <MappingFragment StoreEntitySet="Department">
+                <ScalarProperty Name="departmentid" ColumnName="departmentid" />
+                <ScalarProperty Name="departmentname" ColumnName="departmentname" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Students">
+            <EntityTypeMapping TypeName="MVC_ProjectModel2.Student">
+              <MappingFragment StoreEntitySet="Students">
+                <ScalarProperty Name="studentid" ColumnName="studentid" />
+                <ScalarProperty Name="studentname" ColumnName="studentname" />
+                <ScalarProperty Name="class" ColumnName="class" />
+                <ScalarProperty Name="gender" ColumnName="gender" />
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="image_path" ColumnName="image_path" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Teachers">
+            <EntityTypeMapping TypeName="MVC_ProjectModel2.Teacher">
+              <MappingFragment StoreEntitySet="Teachers">
+                <ScalarProperty Name="teacherid" ColumnName="teacherid" />
+                <ScalarProperty Name="teachername" ColumnName="teachername" />
+                <ScalarProperty Name="departmentid" ColumnName="departmentid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Products">
+            <EntityTypeMapping TypeName="MVC_ProjectModel2.Product">
+              <MappingFragment StoreEntitySet="Product">
+                <ScalarProperty Name="purchase_price" ColumnName="purchase_price" />
+                <ScalarProperty Name="product_name" ColumnName="product_name" />
+                <ScalarProperty Name="product_id" ColumnName="product_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Sales">
+            <EntityTypeMapping TypeName="MVC_ProjectModel2.Sale">
+              <MappingFragment StoreEntitySet="Sales">
+                <ScalarProperty Name="Total_price" ColumnName="Total_price" />
+                <ScalarProperty Name="sales_price" ColumnName="sales_price" />
+                <ScalarProperty Name="Qty" ColumnName="Qty" />
+                <ScalarProperty Name="product_id" ColumnName="product_id" />
+                <ScalarProperty Name="sale_id" ColumnName="sale_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Employees">
+            <EntityTypeMapping TypeName="MVC_ProjectModel2.Employee">
+              <MappingFragment StoreEntitySet="Employee">
+                <ScalarProperty Name="image_path" ColumnName="image_path" />
+                <ScalarProperty Name="designation" ColumnName="designation" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
